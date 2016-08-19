@@ -405,15 +405,21 @@ bool Task::configureHook()
 	{
 	    if(!inital_env.get())
 		throw std::runtime_error("couldn't load inital environment.");
-	    boost::intrusive_ptr<envire::MLSGrid> mls_grid = inital_env->getItem<envire::MLSGrid>();
-            if(!mls_grid)
-                throw std::runtime_error("Initial environment did not contain a mls");
-	    updateICPModelFromMap(mls_grid.get());
+   		//boost::intrusive_ptr<envire::MLSGrid> mls_grid = inital_env->getItem<envire::MLSGrid>();
+   		boost::intrusive_ptr<envire::Pointcloud> mls_cloud = inital_env->getItem<envire::Pointcloud>();
+     if(!mls_cloud){
+         throw std::runtime_error("Initial environment did not contain a mls");
+     }
+     //if(mls_grid)
+    	//    updateICPModelFromMap(mls_grid.get());
+    	//else
+    	    updateICPModelFromMap(mls_cloud.get());
+    	    
 	    RTT::log(RTT::Info) << "Successfully loaded inital multi-level surface grid." << RTT::endlog();
 	}
 	catch(std::runtime_error e)
 	{
-	    RTT::log(RTT::Error) << "Couldn't load inital multi-level surface grid: " << e.what() << RTT::endlog();
+	    RTT::log(RTT::Error) << "Couldn't load inital map: " << e.what() << RTT::endlog();
 	}
     }
     got_map_update = false;

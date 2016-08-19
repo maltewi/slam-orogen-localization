@@ -84,6 +84,11 @@ void PointcloudInMLS::updateHook()
     //if we got a new pointcloud, perform alignment on the latest one
     if(hasNewPointCloud)
     {
+        if(pc.pointcloud_sample.points.size() == 0){
+            LOG_ERROR_S << "Received Point cloud is empty. Ignoring it.";
+            hasNewPointCloud = false;
+            return;
+        }
         if(!pc.pointcloud2body.matrix().isApprox(Eigen::Matrix4d::Identity()))
         {
             // apply transformation

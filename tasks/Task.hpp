@@ -11,6 +11,7 @@
 #include <boost/shared_ptr.hpp>
 #include <pcl/registration/gicp.h>
 #include <envire/operators/MLSProjection.hpp>
+#include <base/Logging.hpp>
 
 namespace localization {
 
